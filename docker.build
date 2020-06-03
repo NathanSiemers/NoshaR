@@ -1,0 +1,19 @@
+#!/bin/bash
+
+mydate=`date +%Y%m%d`
+
+sudo docker build --pull --no-cache --label noshar.$mydate -t noshar.$mydate .  
+
+touch CURRENT
+mv CURRENT PREVIOUS
+echo noshar.$mydate > CURRENT
+
+
+
+
+
+
+
+
+
+

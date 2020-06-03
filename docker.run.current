@@ -1,0 +1,9 @@
+#!/bin/bash
+sudo docker run -d -p 8787:8787 -v ~/Desktop/R:/home/rstudio  -e PASSWORD=fnathanw `cat CURRENT`
+
+
+
+
+
+
+

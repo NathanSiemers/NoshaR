@@ -1,0 +1,4 @@
+#
+docker ps
+##docker exec -it <mycontainer> bash
+sudo docker exec -it `docker ps -n 1 -q` bash
