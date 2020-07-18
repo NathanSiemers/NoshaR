@@ -11,7 +11,8 @@ RUN apt-get install -y \
      sudo gdebi-core  pandoc  pandoc-citeproc  \
      libcairo2-dev   libxt-dev  libjpeg-dev  wget \
       libssl-dev libxml2-dev psmisc dselect libmariadbclient-dev \
-      libcurl4-openssl-dev git emacs libhdf5-dev
+      libcurl4-openssl-dev git emacs libhdf5-dev python3.5 python-pip \
+      python-virtualenv
 
 
 ## Seurat is a monster, try to build early so if it fails we know sooner.
