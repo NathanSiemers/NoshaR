@@ -28,4 +28,8 @@ RUN Rscript r-package-install.R
 
 RUN Rscript -e  'devtools::install_github("homerhanumat/shinyCustom")'
 
+RUN Rscript -e  'devtools::install_github("hylasD/tSpace", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"), force = T)'
+
+
+
 
