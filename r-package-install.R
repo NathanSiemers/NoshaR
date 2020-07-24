@@ -54,6 +54,7 @@ shinythemes,
 stringdist,
 stringr,
 tidyverse,
+umap,
 viridis
 ) )
   for ( i in mylist ) {
