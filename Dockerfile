@@ -1,4 +1,4 @@
-FROM rocker/rstudio:3.5.3
+FROM rocker/rstudio:3.6.3
 
 RUN cat /etc/apt/sources.list
 RUN   apt-get update 
