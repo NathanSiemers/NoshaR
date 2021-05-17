@@ -7,18 +7,36 @@ RUN Rscript -e 'print( .libPaths() ) '
 
 ## install debian packages
 
-RUN apt-get remove -y python2.7
+##RUN apt-get remove -y python2.7
+
 RUN apt-get install -y python3.7
+
+RUN apt-get install -y python3-pip
+
+
+##RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7
+
+##RUN update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
 
 RUN apt-get install -y \
      sudo gdebi-core  pandoc  pandoc-citeproc  \
      libcairo2-dev   libxt-dev  libjpeg-dev  wget \
       libssl-dev libxml2-dev psmisc dselect libmariadbclient-dev \
       libcurl4-openssl-dev git emacs libhdf5-dev python-pip \
-      python-virtualenv bowtie2 salmon samtools jellyfish cmake
+      python-virtualenv bowtie2 salmon samtools jellyfish cmake 
+
+
+
+################################################################
+RUN rm /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
+##RUN mv /usr/bin/pip /usr/bin/pip.old && ln -s /usr/bin/pip2 /usr/bin/pip
+RUN mv /usr/bin/pip /usr/bin/pip.old && ln -s /usr/bin/pip3 /usr/bin/pip
+################################################################
 
 ################################################################
 ## Tracer stuff
+
+
 
 #Trinity - depends on zlib1g-dev and openjdk-8-jre installed previously
 RUN wget https://github.com/trinityrnaseq/trinityrnaseq/releases/download/v2.11.0/trinityrnaseq-v2.11.0.FULL.tar.gz
@@ -45,12 +63,17 @@ RUN tar -xzvf kallisto_linux-v0.43.1.tar.gz && rm kallisto_linux-v0.43.1.tar.gz
 RUN apt-get -y install graphviz
 ## wait wot, tracer isn't in this download...
 
+
+
 RUN wget https://github.com/Teichlab/tracer/archive/refs/heads/master.zip && unzip master.zip && mv tracer-master tracer
 
+RUN pip3 install numpy --upgrade
+RUN pip3 install pyparsing --upgrade
 
 #tracer proper
 COPY . /tracer
 ##RUN cd /tracer && pip install -r docker_helper_files/requirements_stable.txt && python setup.py install
+
 RUN cd /tracer && pip install -r docker_helper_files/requirements_stable.txt && python setup.py install
 
 #obtaining the transcript sequences. no salmon/kallisto indices as they make dockerhub unhappy for some reason
