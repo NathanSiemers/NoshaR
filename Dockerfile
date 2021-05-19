@@ -21,8 +21,6 @@ make install > /dev/null 2>&1 && \
 rm -rf ${BUILDDIR} 
 
 
-
-
 ## install debian packages
 
 RUN apt-get install -y python3.7
@@ -65,5 +63,9 @@ RUN Rscript r-package-install.R
 RUN Rscript -e  'devtools::install_github("homerhanumat/shinyCustom")'
 
 ##RUN Rscript -e  'devtools::install_github("hylasD/tSpace", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"), force = T)'
+
+
+RUN ln -s /usr/local/bin/python3 /usr/local/bin/python
+RUN ln -s /usr/local/bin/pip3 /usr/local/bin/pip
 
 
