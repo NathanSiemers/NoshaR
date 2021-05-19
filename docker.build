@@ -2,8 +2,9 @@
 
 mydate=`date +%Y%m%d`
 
-##sudo docker build --pull --no-cache --label noshar.$mydate -t noshar.$mydate .  | tee docker.log
-sudo docker build --pull --label noshar.$mydate -t noshar.$mydate .  
+sudo docker build --pull --no-cache --label noshar.$mydate -t noshar.$mydate .  | tee docker.log
+##sudo docker build --label noshar.$mydate -t noshar.$mydate .  
+##sudo docker -l error build --label noshar.$mydate -t noshar.$mydate .  
 
 touch CURRENT
 mv CURRENT PREVIOUS
