@@ -1,14 +1,13 @@
 #!/bin/bash
 
+nocache='--pull --no-cache'
+##nocache='--no-cache'
+##nocache=''
+
 mydate=`date +%Y%m%d`
 
-##sudo docker build --pull --no-cache --label noshar.$mydate -t noshar.$mydate .  | tee docker.log
-sudo docker build --label noshar.$mydate -t noshar.$mydate .  
-##sudo docker -l error build --label noshar.$mydate -t noshar.$mydate .  
+sudo docker build $nocache --tag noshar.$mydate .  && touch CURRENT && mv CURRENT PREVIOUS && echo noshar.$mydate > CURRENT  && docker tag noshar.$mydate noshar:latest
 
-touch CURRENT
-mv CURRENT PREVIOUS
-echo noshar.$mydate > CURRENT
 
 
 
