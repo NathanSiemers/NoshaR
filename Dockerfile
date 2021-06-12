@@ -57,14 +57,18 @@ RUN pip3 install pandas --upgrade
 
 ## Seurat is a monster, try to build early so if it fails we know sooner.
 
-RUN Rscript -e 'options("BioC_mirror" = "https://bioconductor.org"); setRepositories(ind = 1:2); install.packages( "Seurat" ) '
-RUN Rscript -e 'options("BioC_mirror" = "https://bioconductor.org"); setRepositories(ind = 1:2); install.packages("GO.db" ) '
-RUN Rscript -e 'options("BioC_mirror" = "https://bioconductor.org"); setRepositories(ind = 1:2); install.packages("DO.db" ) '
-RUN Rscript -e 'options("BioC_mirror" = "https://bioconductor.org"); setRepositories(ind = 1:2); install.packages("enrichplot" ) '
-RUN Rscript -e 'options("BioC_mirror" = "https://bioconductor.org"); setRepositories(ind = 1:2); install.packages("GOSemSim" ) '
-RUN Rscript -e 'options("BioC_mirror" = "https://bioconductor.org"); setRepositories(ind = 1:2); install.packages("clusterProfiler" ) '
-RUN Rscript -e 'options("BioC_mirror" = "https://bioconductor.org"); setRepositories(ind = 1:2); install.packages("topGO" ) '
-RUN Rscript -e 'options("BioC_mirror" = "https://bioconductor.org"); setRepositories(ind = 1:2); install.packages("HTSeqGenie") '
+RUN Rscript -e 'install.packages("BiocManager") '
+
+RUN Rscript -e 'BiocManager::install( "Seurat" ) '
+RUN Rscript -e 'BiocManager::install( "pathview" ) '
+RUN Rscript -e 'BiocManager::install("GO.db" ) '
+RUN Rscript -e 'BiocManager::install("DO.db" ) '
+RUN Rscript -e 'BiocManager::install("org.Hs.eg.db" ) '
+RUN Rscript -e 'BiocManager::install("enrichplot" ) '
+RUN Rscript -e 'BiocManager::install("GOSemSim" ) '
+RUN Rscript -e 'BiocManager::install("clusterProfiler" ) '
+RUN Rscript -e 'BiocManager::install("topGO" ) '
+RUN Rscript -e 'BiocManager::install("HTSeqGenie") '
 
 ################################################################
 ## install a ton of other packages, see r-package-install.R
@@ -80,5 +84,6 @@ RUN Rscript r-package-install.R
 RUN Rscript -e  'devtools::install_github("homerhanumat/shinyCustom")'
 
 RUN Rscript -e  'devtools::install_github("hylasD/tSpace", build = TRUE, build_opts = c("--no-resave-data", "--no-manual"), force = T)'
+
 
 
