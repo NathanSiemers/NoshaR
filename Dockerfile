@@ -52,26 +52,26 @@ RUN pip3 install pandas --upgrade
 
 
 ################################################################
-## install bioconductor packages
-################################################################
+## ## install bioconductor packages
+## ################################################################
 
-## Seurat is a monster, try to build early so if it fails we know sooner.
+## ## Seurat is a monster, try to build early so if it fails we know sooner.
 
-RUN Rscript -e 'install.packages("BiocManager") '
+## RUN Rscript -e 'install.packages("BiocManager") '
 
-RUN Rscript -e 'BiocManager::install( "Seurat" ) '
-RUN Rscript -e 'BiocManager::install( "pathview" ) '
-RUN Rscript -e 'BiocManager::install("GO.db" ) '
-RUN Rscript -e 'BiocManager::install("DO.db" ) '
-RUN Rscript -e 'BiocManager::install("org.Hs.eg.db" ) '
-RUN Rscript -e 'BiocManager::install("enrichplot" ) '
-RUN Rscript -e 'BiocManager::install("GOSemSim" ) '
-RUN Rscript -e 'BiocManager::install("clusterProfiler" ) '
-RUN Rscript -e 'BiocManager::install("topGO" ) '
-RUN Rscript -e 'BiocManager::install("HTSeqGenie") '
+## RUN Rscript -e 'BiocManager::install( "Seurat" ) '
+## RUN Rscript -e 'BiocManager::install( "pathview" ) '
+## RUN Rscript -e 'BiocManager::install("GO.db" ) '
+## RUN Rscript -e 'BiocManager::install("DO.db" ) '
+## RUN Rscript -e 'BiocManager::install("org.Hs.eg.db" ) '
+## RUN Rscript -e 'BiocManager::install("enrichplot" ) '
+## RUN Rscript -e 'BiocManager::install("GOSemSim" ) '
+## RUN Rscript -e 'BiocManager::install("clusterProfiler" ) '
+## RUN Rscript -e 'BiocManager::install("topGO" ) '
+## RUN Rscript -e 'BiocManager::install("HTSeqGenie") '
 
-################################################################
-## install a ton of other packages, see r-package-install.R
+## ################################################################
+## ## install a ton of other packages, see r-package-install.R
 ################################################################
 
 ADD r-package-install.R r-package-install.R
