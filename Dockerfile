@@ -1,7 +1,6 @@
-FROM rocker/rstudio:3.6.3
+FROM rocker/rstudio:4.1.1
 
 RUN   apt-get update -y
-
 ## RUN Rscript -e 'print( .libPaths() ) '
 ################################################################
 ## install debian packages
@@ -11,9 +10,9 @@ RUN apt-get install -y \
      sudo gdebi-core  pandoc  pandoc-citeproc  \
      libcairo2-dev   libxt-dev  libjpeg-dev  wget \
       libssl-dev libxml2-dev psmisc dselect libmariadbclient-dev \
-      libcurl4-openssl-dev git libhdf5-dev python-pip \
-      python-virtualenv bowtie2 salmon samtools jellyfish cmake \
-      emacs ess elpa-ess
+      libcurl4-openssl-dev git libhdf5-dev python3-pip \
+      python3-virtualenv bowtie2 salmon samtools jellyfish cmake \
+      emacs ess elpa-ess libglpk-dev
 RUN apt-get install -y rustc wget gcc make libffi-dev zlib1g-dev 
 RUN apt-get install -y libgirepository1.0-dev libbz2-dev
 RUN apt-get install -y libffi-dev
@@ -55,7 +54,7 @@ RUN pip3 install pandas --upgrade
 ## ## install bioconductor packages
 ## ################################################################
 
-## ## Seurat is a monster, try to build early so if it fails we know sooner.
+## ## Seurat is a monstera, try to build early so if it fails we know sooner.
 
 ## RUN Rscript -e 'install.packages("BiocManager") '
 

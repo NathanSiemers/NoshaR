@@ -1,7 +1,4 @@
-sessionInfo()
-
 qwc = function(...) { as.character( unlist( as.list( match.call() )[ -1 ] ) ) }
-
 
 cranlist = qwc (
     ##Biostrings,
@@ -37,6 +34,7 @@ cranlist = qwc (
     glue,
     gridExtra,
     gtable,
+    igraph,
     knitr,
     meta,
     miniUI,
@@ -89,29 +87,32 @@ bioconductorlist = qwc (
     ##clusterProfiler,
     ##HTSeqGenie,
     topGO
-)    
-    
+)        
 
 install_it = function() {
+    for ( i in cranlist ) {
+        try( remove.packages( i ) )
+    }
 
-        for ( i in cranlist ) {
-            ##try(remove.packages( i, '/usr/local/lib/R/library') )
-            ##try(remove.packages( i, '/usr/local/lib/R/site-library') )
-            print('building in cran')
-            print(i)
-            install.packages(i)
-            if ( ! library(i, character.only=TRUE, logical.return=TRUE) ) {
-                quit(status=1, save='no')
-            }
+    for ( i in cranlist ) {
+        ##try(remove.packages( i, '/usr/local/lib/R/library') )
+        ##try(remove.packages( i, '/usr/local/lib/R/site-library') )
+        print('building in cran')
+        print(i)
+        print(.libPaths())
+        install.packages(i)
+        if ( ! library(i, character.only=TRUE, logical.return=TRUE) ) {
+            quit(status=1, save='no')
         }
+    }
 
     for ( i in bioconductorlist ) {
-            print('building in bioconductor')
-            print(i)
-            BiocManager::install( i, type = "source" )
-            if ( ! library(i, character.only=TRUE, logical.return=TRUE) ) {
-                quit(status=1, save='no')
-            }
+        print('building in bioconductor')
+        print(i)
+        BiocManager::install( i, type = "source" )
+        if ( ! library(i, character.only=TRUE, logical.return=TRUE) ) {
+            quit(status=1, save='no')
+        }
     }
 }
 
