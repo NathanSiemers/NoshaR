@@ -1,11 +1,17 @@
+options(install.packages.check.source = "no")
+options(install.packages.compile.from.source = "always")
+
 qwc = function(...) { as.character( unlist( as.list( match.call() )[ -1 ] ) ) }
+
+cranlist.first = qwc(
+    scales,
+    gridExtra )
 
 cranlist = qwc (
     ##Biostrings,
-    Seurat,
     DT,
     devtools,
-    ##GEOquery,
+    GEOquery,
     GGally,
     Hmisc,
     RCurl,
@@ -14,7 +20,6 @@ cranlist = qwc (
     bigmemory,
     BiocManager,
     boot,
-    cowplot,
     data.table,
     DBI,
     doMC,
@@ -24,6 +29,7 @@ cranlist = qwc (
     factoextra,
     flextable,
     foreach,
+    furrr,
     ggpubr,
     ggridges,
     ggpubr,
@@ -32,7 +38,6 @@ cranlist = qwc (
     ggsci,
     ggnewscale,
     glue,
-    gridExtra,
     gtable,
     igraph,
     knitr,
@@ -49,7 +54,7 @@ cranlist = qwc (
     pROC,
     pool,
     ppcor,
-    ##printr,
+    printr,
     psych,
     qgraph,
     qlcMatrix,
@@ -60,7 +65,6 @@ cranlist = qwc (
     scales,
     shiny,
     shinyBS,
-    ##shinybusy,
     shinycssloaders,
     shinydashboard,
     shinyjs,
@@ -77,6 +81,12 @@ cranlist = qwc (
 ) 
 
 bioconductorlist = qwc (
+    scran,
+    Seurat,
+    SeuratData,
+    SeuratDisk,
+    TENxPBMCData,
+    glmGamPoi,
     pathview,
     GO.db,
     DO.db,
@@ -86,34 +96,72 @@ bioconductorlist = qwc (
     GOSemSim,
     ##clusterProfiler,
     ##HTSeqGenie,
-    topGO
+    topGO,
+    limma
 )        
 
 install_it = function() {
-    for ( i in cranlist ) {
-        try( remove.packages( i ) )
+
+    ## optionally remove packages
+    for ( i in c(cranlist.first, cranlist, bioconductorlist) ) {
+        ##    try( remove.packages( i ) )
     }
 
+    ## some packages might be needed first?
+    for ( i in cranlist.first ) {
+
+        install.packages(cranlist, type = 'binary', dependencies = TRUE)
+
+        if ( ! library(i, character.only=TRUE, logical.return=TRUE) ) {
+            ##quit(status=1, save='no')
+            stop(paste('THERE WAS A PROBLEM WITH', i, 'NATHAN'))
+        }
+    }
+
+
+    ## bioconductor
+    for ( i in bioconductorlist ) {
+        print('building in bioconductor')
+        install.packages('BiocManager')
+
+        ################################################################
+        BiocManager::install( i,  ask = FALSE,
+                             update = FALSE, force = FALSE)
+        ################################################################
+
+
+        ## error checking
+        if ( ! library(i, character.only=TRUE, logical.return=TRUE) ) {
+            ##quit(status=1, save='no')
+            stop(paste('THERE WAS A PROBLEM WITH', i, 'NATHAN'))
+        }
+    }
+
+    ## cran main body of packages
     for ( i in cranlist ) {
-        ##try(remove.packages( i, '/usr/local/lib/R/library') )
-        ##try(remove.packages( i, '/usr/local/lib/R/site-library') )
         print('building in cran')
         print(i)
         print(.libPaths())
-        install.packages(i)
+
+        ################################################################
+        install.packages(i, dependencies = TRUE, type = 'binary',
+                         repos = 'https://cloud.r-project.org/')
+        ################################################################
+
+
+        ## error checking
         if ( ! library(i, character.only=TRUE, logical.return=TRUE) ) {
-            quit(status=1, save='no')
+            ##quit(status=1, save='no')
+            stop(paste('THERE WAS A PROBLEM WITH', i, 'NATHAN'))
         }
     }
 
-    for ( i in bioconductorlist ) {
-        print('building in bioconductor')
-        print(i)
-        BiocManager::install( i, type = "source" )
-        if ( ! library(i, character.only=TRUE, logical.return=TRUE) ) {
-            quit(status=1, save='no')
-        }
-    }
 }
 
 install_it()
+
+
+
+
+
+
